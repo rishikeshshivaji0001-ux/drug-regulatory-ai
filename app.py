@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # -------------------------------
-# Load trained pipeline
+# Load trained model pipeline
 # -------------------------------
 pipeline = joblib.load("drug_pipeline.pkl")
 
@@ -12,13 +12,25 @@ pipeline = joblib.load("drug_pipeline.pkl")
 # -------------------------------
 st.set_page_config(page_title="Drug Regulatory Risk Assessment", layout="wide")
 
+# -------------------------------
+# Header Section
+# -------------------------------
 st.title("💊 Drug Regulatory Risk Assessment System")
-st.markdown("### Supervised Machine Learning Classification Model")
+st.markdown("#### Supervised Machine Learning-Based Regulatory Classification Model")
+
+st.markdown("""
+This system evaluates whether a drug is likely to be **Regulated** or **Non-Regulated**
+based on clinical, financial, safety, and risk-related attributes.
+
+Built using an end-to-end machine learning pipeline.
+""")
+
+st.divider()
 
 # -------------------------------
 # Sidebar Inputs
 # -------------------------------
-st.sidebar.header("Enter Drug Details")
+st.sidebar.header("🔧 Enter Drug Parameters")
 
 Dosage_mg = st.sidebar.number_input("Dosage (mg)", value=100)
 Price_Per_Unit = st.sidebar.number_input("Price Per Unit", value=10.0)
@@ -51,10 +63,12 @@ Requires_Cold_Storage = st.sidebar.selectbox("Requires Cold Storage", ["Yes", "N
 OTC_Flag = st.sidebar.selectbox("OTC Flag", ["Yes", "No"])
 High_Risk_Substance = st.sidebar.selectbox("High Risk Substance", ["Yes", "No"])
 
+st.divider()
+
 # -------------------------------
-# Main Result Section
+# Result Section
 # -------------------------------
-st.subheader("🔎 Risk Assessment Result")
+st.subheader("📊 Regulatory Risk Assessment Result")
 
 if st.sidebar.button("🚀 Run Risk Assessment"):
 
@@ -93,12 +107,16 @@ if st.sidebar.button("🚀 Run Risk Assessment"):
     prediction = pipeline.predict(input_df)
     probability = pipeline.predict_proba(input_df)[0][1]
 
-    if prediction[0] == 1:
-        st.error("⚠️ High Regulatory Risk – Likely Regulated Drug")
-    else:
-        st.success("✅ Low Regulatory Risk – Likely Non-Regulated Drug")
+    col1, col2 = st.columns(2)
 
-    st.metric("Regulatory Risk Probability", f"{probability*100:.1f}%")
+    with col1:
+        if prediction[0] == 1:
+            st.error("⚠️ High Regulatory Risk")
+        else:
+            st.success("✅ Low Regulatory Risk")
+
+    with col2:
+        st.metric("Risk Probability", f"{probability*100:.1f}%")
 
 else:
-    st.info("Fill in the drug parameters on the left and click 'Run Risk Assessment'.")
+    st.info("Enter parameters in the sidebar and click 'Run Risk Assessment'.")
