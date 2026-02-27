@@ -21,8 +21,6 @@ st.markdown("#### Supervised Machine Learning-Based Regulatory Classification Mo
 st.markdown("""
 This system evaluates whether a drug is likely to be **Regulated** or **Non-Regulated**
 based on clinical, financial, safety, and risk-related attributes.
-
-Built using an end-to-end machine learning pipeline.
 """)
 
 st.divider()
