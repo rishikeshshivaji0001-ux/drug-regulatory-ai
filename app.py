@@ -20,10 +20,11 @@ st.markdown("#### Supervised Machine Learning-Based Regulatory Classification Mo
 
 st.markdown("""
 This system evaluates whether a drug is likely to be **Regulated** or **Non-Regulated**
-based on clinical, financial, safety, and risk-related attributes.
-""")
+based on clinical, financial, safety, and risk-related attributes""")
 
-st.divider()
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
+
 
 # -------------------------------
 # Sidebar Inputs
@@ -61,7 +62,7 @@ Requires_Cold_Storage = st.sidebar.selectbox("Requires Cold Storage", ["Yes", "N
 OTC_Flag = st.sidebar.selectbox("OTC Flag", ["Yes", "No"])
 High_Risk_Substance = st.sidebar.selectbox("High Risk Substance", ["Yes", "No"])
 
-st.divider()
+
 
 # -------------------------------
 # Result Section
